@@ -9,15 +9,21 @@ import Spacer from '../Spacer';
 const TAGS = {
   'on-sale': {
     "--display": "block",
-    "--backgroundColor": COLORS.primary
+    "--saleDisplay": "block",
+    "--backgroundColor": COLORS.primary,
+    "--text-decoration": "line-through"
   },
   'new-release': {
+    "--saleDisplay": "none",
     "--display": "block",
-    "--backgroundColor": COLORS.secondary
+    "--backgroundColor": COLORS.secondary,
+    "--text-decoration": "none"
   },
   'default': {
+    "--saleDisplay": "none",
     "--display": "none",
-    "--backgroundColor": COLORS.primary
+    "--backgroundColor": COLORS.primary,
+    "--text-decoration": "none"
   }
 };
 
@@ -59,10 +65,13 @@ const ShoeCard = ({
         <Spacer size={12} />
         <Row>
           <Name>{name}</Name>
-          <Price>{formatPrice(price)}</Price>
+          <Price style={tagStyles}>{formatPrice(price)}</Price>
         </Row>
         <Row>
           <ColorInfo>{pluralize('Color', numOfColors)}</ColorInfo>
+          
+          <SalePrice  style={tagStyles}>{formatPrice(salePrice)}</SalePrice>            
+          
         </Row>
       </Wrapper>
     </Link>
@@ -113,7 +122,10 @@ const Name = styled.h3`
   color: ${COLORS.gray[900]};
 `;
 
-const Price = styled.span``;
+const Price = styled.span`
+  text-decoration: var(--text-decoration);
+  color: ${COLORS.gray[700]};
+`;
 
 const ColorInfo = styled.p`
   color: ${COLORS.gray[700]};
@@ -122,6 +134,8 @@ const ColorInfo = styled.p`
 const SalePrice = styled.span`
   font-weight: ${WEIGHTS.medium};
   color: ${COLORS.primary};
-`;
+  // text-decoration: line-through;
+  display: var(--saleDisplay);
+  `;
 
 export default ShoeCard;
